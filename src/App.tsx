@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
@@ -15,21 +15,16 @@ const App = () => {
   const [todos, setTodos] = useState<TodoType[]>([]);
   const [status, setStatus] = useState("all");
 
-  const handleTodos = (type: string, todos: TodoType[], todo: TodoType) => {
-    switch (type) {
-      case "add":
-        setTodos([...todos, todo]);
-        break;
-
-      default:
-        break;
-    }
+  const handleAddTodo = (newTodo: TodoType) => {
+    setTodos((prevTodos): TodoType[] => {
+      return [newTodo, ...prevTodos];
+    });
   };
 
   return (
     <div className="App">
       Hello Todos🍬
-      <Form todos={todos} setStatus={setStatus} handleTodos={handleTodos} />
+      <Form setStatus={setStatus} handleAddTodo={handleAddTodo} />
       <TodoList todos={todos} setTodos={setTodos} status={status} />
     </div>
   );

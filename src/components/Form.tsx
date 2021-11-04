@@ -3,20 +3,20 @@ import { useRef } from "react";
 import { TodoType } from "../App";
 
 type Props = {
-  todos: TodoType[];
-  handleTodos: (type: string, todos: TodoType[], todo: TodoType) => void;
+  handleAddTodo: (newTodo: TodoType) => void;
   setStatus: (status: string) => void;
 };
 
-const Form = ({ todos, handleTodos, setStatus }: Props) => {
+const Form = ({ handleAddTodo, setStatus }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const submitTodoHandler = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    handleTodos("add", todos, {
+  const submitTodoHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const newTodo = {
       id: Math.random() * 1000,
       text: inputRef.current!.value,
       completed: false,
-    });
+    };
+    handleAddTodo(newTodo);
 
     inputRef.current!.value = "";
   };
@@ -25,9 +25,9 @@ const Form = ({ todos, handleTodos, setStatus }: Props) => {
   };
 
   return (
-    <form>
+    <form onSubmit={submitTodoHandler}>
       <input ref={inputRef} type="text" className="todo-input" />
-      <button onClick={submitTodoHandler} className="todo-button" type="submit">
+      <button className="todo-button">
         <i className="fas fa-plus-square"></i>
       </button>
       <div className="select">
