@@ -4,11 +4,12 @@ import { TodoType } from "../App";
 
 type Props = {
   todos: TodoType[];
+  handleDeleteTodo: (todoId: number) => void;
   setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
   status: string;
 };
 
-const TodoList = ({ todos, setTodos, status }: Props) => {
+const TodoList = ({ todos, setTodos, status, handleDeleteTodo }: Props) => {
   const filteredTodo = todos.filter((todo) => {
     switch (status) {
       case "completed":
@@ -24,7 +25,12 @@ const TodoList = ({ todos, setTodos, status }: Props) => {
     <div className="todo-container">
       <ul className="todo-list">
         {filteredTodo.map((todo) => (
-          <Todo todo={todo} key={todo.id} setTodos={setTodos} />
+          <Todo
+            todo={todo}
+            key={todo.id}
+            setTodos={setTodos}
+            handleDeleteTodo={handleDeleteTodo}
+          />
         ))}
       </ul>
     </div>

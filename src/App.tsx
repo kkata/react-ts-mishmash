@@ -21,11 +21,24 @@ const App = () => {
     });
   };
 
+  const handleDeleteTodo = (todoId: number) => {
+    setTodos((prevTodos) => {
+      return prevTodos.filter((item) => {
+        return item.id !== todoId;
+      });
+    });
+  };
+
   return (
     <div className="App">
       Hello Todos🍬
       <Form setStatus={setStatus} handleAddTodo={handleAddTodo} />
-      <TodoList todos={todos} setTodos={setTodos} status={status} />
+      <TodoList
+        todos={todos}
+        setTodos={setTodos}
+        status={status}
+        handleDeleteTodo={handleDeleteTodo}
+      />
     </div>
   );
 };
