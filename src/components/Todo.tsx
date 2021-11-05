@@ -2,26 +2,18 @@ import React from "react";
 import { TodoType } from "../App";
 
 type Props = {
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
   handleDeleteTodo: (todoId: number) => void;
+  handleCompleteTodo: (todoId: number) => void;
 } & { todo: TodoType };
 
-const Todo = ({ todo, setTodos, handleDeleteTodo }: Props) => {
+const Todo = ({ todo, handleDeleteTodo, handleCompleteTodo }: Props) => {
   const deleteHandler = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     handleDeleteTodo(todo.id);
   };
-  const completeHandler = () => {
-    setTodos((prevTodos) => {
-      return prevTodos.map((item) => {
-        return item.id === todo.id
-          ? {
-              ...item,
-              completed: !item.completed,
-            }
-          : item;
-      });
-    });
+  const completeHandler = (event: React.FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    handleCompleteTodo(todo.id);
   };
 
   return (

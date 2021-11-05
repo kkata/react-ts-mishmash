@@ -5,11 +5,16 @@ import { TodoType } from "../App";
 type Props = {
   todos: TodoType[];
   handleDeleteTodo: (todoId: number) => void;
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
+  handleCompleteTodo: (todoId: number) => void;
   status: string;
 };
 
-const TodoList = ({ todos, setTodos, status, handleDeleteTodo }: Props) => {
+const TodoList = ({
+  todos,
+  status,
+  handleDeleteTodo,
+  handleCompleteTodo,
+}: Props) => {
   const filteredTodo = todos.filter((todo) => {
     switch (status) {
       case "completed":
@@ -28,8 +33,8 @@ const TodoList = ({ todos, setTodos, status, handleDeleteTodo }: Props) => {
           <Todo
             todo={todo}
             key={todo.id}
-            setTodos={setTodos}
             handleDeleteTodo={handleDeleteTodo}
+            handleCompleteTodo={handleCompleteTodo}
           />
         ))}
       </ul>

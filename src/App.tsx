@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
@@ -29,15 +29,28 @@ const App = () => {
     });
   };
 
+  const handleCompleteTodo = (todoId: number) => {
+    setTodos((prevTodos) => {
+      return prevTodos.map((item) => {
+        return item.id === todoId
+          ? {
+              ...item,
+              completed: !item.completed,
+            }
+          : item;
+      });
+    });
+  };
+
   return (
     <div className="App">
       Hello Todos🍬
       <Form setStatus={setStatus} handleAddTodo={handleAddTodo} />
       <TodoList
         todos={todos}
-        setTodos={setTodos}
         status={status}
         handleDeleteTodo={handleDeleteTodo}
+        handleCompleteTodo={handleCompleteTodo}
       />
     </div>
   );
