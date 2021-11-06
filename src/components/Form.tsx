@@ -1,13 +1,13 @@
 import { useRef } from "react";
 
-import { TodoType } from "../App";
+import { TodoType, todoStatus, TodoStatusType } from "../App";
 
 type Props = {
   handleAddTodo: (newTodo: TodoType) => void;
-  setStatus: (status: string) => void;
+  handleStatus: (status: TodoStatusType) => void;
 };
 
-const Form = ({ handleAddTodo, setStatus }: Props) => {
+const Form = ({ handleAddTodo, handleStatus }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const submitTodoHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,9 +20,19 @@ const Form = ({ handleAddTodo, setStatus }: Props) => {
 
     inputRef.current!.value = "";
   };
+
   const statusHandler = (e: React.FormEvent<HTMLSelectElement>) => {
-    setStatus(e.currentTarget.value);
+    const target = e.currentTarget.value as TodoStatusType;
+    handleStatus(target);
   };
+
+  const options = todoStatus.map((item, index) => {
+    return (
+      <option value={item} key={index}>
+        {item}
+      </option>
+    );
+  });
 
   return (
     <form onSubmit={submitTodoHandler}>
@@ -32,9 +42,7 @@ const Form = ({ handleAddTodo, setStatus }: Props) => {
       </button>
       <div className="select">
         <select onChange={statusHandler} name="todos" className="filter-todo">
-          <option value="all">All</option>
-          <option value="completed">Completed</option>
-          <option value="uncompleted">Uncompleted</option>
+          {options}
         </select>
       </div>
     </form>

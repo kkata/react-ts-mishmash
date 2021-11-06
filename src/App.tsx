@@ -11,9 +11,12 @@ export type TodoType = {
   completed: boolean;
 };
 
+export const todoStatus = ["all", "completed", "uncompleted"] as const;
+export type TodoStatusType = typeof todoStatus[number];
+
 const App = () => {
   const [todos, setTodos] = useState<TodoType[]>([]);
-  const [status, setStatus] = useState("all");
+  const [status, setStatus] = useState<string>("all");
 
   const handleAddTodo = (newTodo: TodoType) => {
     setTodos((prevTodos): TodoType[] => {
@@ -42,10 +45,14 @@ const App = () => {
     });
   };
 
+  const handleStatus = (status: TodoStatusType) => {
+    setStatus(status);
+  };
+
   return (
     <div className="App">
       Hello Todos🍬
-      <Form setStatus={setStatus} handleAddTodo={handleAddTodo} />
+      <Form handleAddTodo={handleAddTodo} handleStatus={handleStatus} />
       <TodoList
         todos={todos}
         status={status}
