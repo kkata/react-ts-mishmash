@@ -58,7 +58,7 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <div>
       Hello Todos🍬
       <Form handleAddTodo={handleAddTodo} handleStatus={handleStatus} />
       <TodoList

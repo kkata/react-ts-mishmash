@@ -36,14 +36,12 @@ const Form = ({ handleAddTodo, handleStatus }: Props) => {
 
   return (
     <form onSubmit={submitTodoHandler}>
-      <input ref={inputRef} type="text" className="todo-input" />
-      <button className="todo-button">
+      <input ref={inputRef} type="text" />
+      <button>
         <i className="fas fa-plus-square"></i>
       </button>
       <div className="select">
-        <select onChange={statusHandler} name="todos" className="filter-todo">
-          {options}
-        </select>
+        <select onChange={statusHandler}>{options}</select>
       </div>
     </form>
   );

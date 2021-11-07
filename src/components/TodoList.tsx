@@ -29,8 +29,8 @@ const TodoList = ({
   });
 
   return (
-    <div className="todo-container">
-      <ul className="todo-list">
+    <div>
+      <ul>
         {filteredTodo.map((todo) => (
           <Todo
             todo={todo}
