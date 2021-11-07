@@ -13,7 +13,7 @@ const Todo = ({
   handleCompleteTodo,
   handleEditTodo,
 }: Props) => {
-  const [isReadOnly, setIsReadOnly] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
 
   const deleteHandler = () => {
     handleDeleteTodo(todo.id);
@@ -26,25 +26,29 @@ const Todo = ({
     handleEditTodo(todo.id, event.currentTarget.value);
   };
 
-  const readOnlyHandler = () => {
-    setIsReadOnly(!isReadOnly);
+  const editingHandler = () => {
+    setIsEditing(!isEditing);
   };
 
   return (
     <li>
-      <p>
+      {isEditing ? (
         <input
           type="text"
           value={todo.text}
           onChange={editHandler}
-          onFocus={readOnlyHandler}
-          onBlur={readOnlyHandler}
-          readOnly={isReadOnly}
+          onBlur={editingHandler}
         />
-      </p>
-      <button onClick={completeHandler}>
-        <i className="fas fa-check"></i>
-      </button>
+      ) : (
+        <p onClick={editingHandler}>
+          {todo.completed ? <del>{todo.text}</del> : todo.text}
+        </p>
+      )}
+      {!isEditing && (
+        <button onClick={completeHandler}>
+          <i className="fas fa-check"></i>
+        </button>
+      )}
       <button onClick={deleteHandler}>
         <i className="fas fa-trash"></i>
       </button>
