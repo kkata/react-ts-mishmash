@@ -45,6 +45,14 @@ const App = () => {
     });
   };
 
+  const handleEditTodo = (todoId: number, todoText: string) => {
+    setTodos((prevTodos) => {
+      return prevTodos.map((item) => {
+        return item.id === todoId ? { ...item, text: todoText } : item;
+      });
+    });
+  };
+
   const handleStatus = (status: TodoStatusType) => {
     setStatus(status);
   };
@@ -58,6 +66,7 @@ const App = () => {
         status={status}
         handleDeleteTodo={handleDeleteTodo}
         handleCompleteTodo={handleCompleteTodo}
+        handleEditTodo={handleEditTodo}
       />
     </div>
   );

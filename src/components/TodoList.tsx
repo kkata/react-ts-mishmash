@@ -6,6 +6,7 @@ type Props = {
   todos: TodoType[];
   handleDeleteTodo: (todoId: number) => void;
   handleCompleteTodo: (todoId: number) => void;
+  handleEditTodo: (todoId: number, todoText: string) => void;
   status: string;
 };
 
@@ -14,6 +15,7 @@ const TodoList = ({
   status,
   handleDeleteTodo,
   handleCompleteTodo,
+  handleEditTodo,
 }: Props) => {
   const filteredTodo = todos.filter((todo) => {
     switch (status) {
@@ -35,6 +37,7 @@ const TodoList = ({
             key={todo.id}
             handleDeleteTodo={handleDeleteTodo}
             handleCompleteTodo={handleCompleteTodo}
+            handleEditTodo={handleEditTodo}
           />
         ))}
       </ul>
