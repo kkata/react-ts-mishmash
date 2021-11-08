@@ -30,6 +30,8 @@ const Todo = ({
     setIsEditing(!isEditing);
   };
 
+  console.log(isEditing);
+
   return (
     <li>
       {isEditing ? (
@@ -50,9 +52,12 @@ const Todo = ({
           <i className="fas fa-check"></i>
         </button>
       )}
+
       <button onClick={deleteHandler}>
         <i className="fas fa-trash"></i>
       </button>
+      <p>created: {todo.created.toISOString()}</p>
+      {todo.updated && <p>updated: {todo.updated.toISOString()}</p>}
     </li>
   );
 };

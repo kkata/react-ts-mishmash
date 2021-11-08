@@ -15,6 +15,7 @@ const Form = ({ handleAddTodo, handleStatus }: Props) => {
       id: Math.random() * 1000,
       text: inputRef.current!.value,
       completed: false,
+      created: new Date(),
     };
     handleAddTodo(newTodo);
 

@@ -9,6 +9,8 @@ export type TodoType = {
   id: number;
   text: string;
   completed: boolean;
+  created: Date;
+  updated?: Date;
 };
 
 export const todoStatus = ["all", "completed", "uncompleted"] as const;
@@ -39,6 +41,7 @@ const App = () => {
           ? {
               ...item,
               completed: !item.completed,
+              updated: new Date(),
             }
           : item;
       });
@@ -48,7 +51,9 @@ const App = () => {
   const handleEditTodo = (todoId: number, todoText: string) => {
     setTodos((prevTodos) => {
       return prevTodos.map((item) => {
-        return item.id === todoId ? { ...item, text: todoText } : item;
+        return item.id === todoId
+          ? { ...item, text: todoText, updated: new Date() }
+          : item;
       });
     });
   };
