@@ -38,6 +38,7 @@ const Todo = ({
           value={todo.text}
           onChange={editHandler}
           onBlur={editingHandler}
+          autoFocus
         />
       ) : (
         <p onClick={editingHandler}>
