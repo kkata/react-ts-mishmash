@@ -30,8 +30,6 @@ const Todo = ({
     setIsEditing(!isEditing);
   };
 
-  console.log(isEditing);
-
   return (
     <li>
       {isEditing ? (
