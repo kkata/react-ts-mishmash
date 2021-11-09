@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
+import Counter from "./components/Counter";
 
 import "./App.css";
 
@@ -73,6 +74,7 @@ const App = () => {
         handleCompleteTodo={handleCompleteTodo}
         handleEditTodo={handleEditTodo}
       />
+      <Counter />
     </div>
   );
 };
