@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
-import { CounterState } from "../store/index";
+import { CounterState, CounterVisibleState } from "../store/index";
 
 const Counter = () => {
   const dispatch = useDispatch();
   const counter = useSelector((state: CounterState) => state.value);
+  const show = useSelector((state: CounterVisibleState) => state.isVisible);
   const handleIncrement = () => {
     dispatch({ type: "increment" });
   };
@@ -13,10 +14,13 @@ const Counter = () => {
   const handleIncrease = () => {
     dispatch({ type: "increase", amount: 5 });
   };
+  const handleToggle = () => {
+    dispatch({ type: "toggle" });
+  };
   return (
     <div>
       <h1>Counter</h1>
-      <p>{counter}</p>
+      {show && <p>{counter}</p>}
       <button onClick={handleIncrement} type="button">
         increment
       </button>
@@ -25,6 +29,9 @@ const Counter = () => {
       </button>
       <button onClick={handleDecrement} type="button">
         decrement
+      </button>
+      <button onClick={handleToggle} type="button">
+        toggle
       </button>
     </div>
   );
