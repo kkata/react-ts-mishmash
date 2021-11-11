@@ -1,10 +1,10 @@
-import { createStore, AnyAction } from "redux";
+import { createSlice, PayloadAction, configureStore } from "@reduxjs/toolkit";
 
-export type CounterState = {
+type CounterState = {
   value: number;
 };
 
-export type CounterVisibleState = {
+type CounterVisibleState = {
   isVisible: boolean;
 };
 
@@ -13,33 +13,30 @@ const initialState: CounterState & CounterVisibleState = {
   isVisible: true,
 };
 
-const counterReducer = (state = initialState, action: AnyAction) => {
-  if (action.type === "increment") {
-    return {
-      value: state.value + 1,
-      isVisible: state.isVisible,
-    };
-  }
-  if (action.type === "increase") {
-    return {
-      value: state.value + action.amount,
-      isVisible: state.isVisible,
-    };
-  }
-  if (action.type === "decrement") {
-    return {
-      value: state.value - 1,
-      isVisible: state.isVisible,
-    };
-  }
-  if (action.type === "toggle") {
-    return {
-      value: state.value,
-      isVisible: !state.isVisible,
-    };
-  }
+const counterSlice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {
+    increment(state) {
+      state.value++;
+    },
+    decrement(state) {
+      state.value--;
+    },
+    increase(state, action: PayloadAction<number>) {
+      state.value += action.payload;
+    },
+    toggleCounter(state) {
+      state.isVisible = !state.isVisible;
+    },
+  },
+});
 
-  return state;
-};
+export const store = configureStore({
+  reducer: { counter: counterSlice.reducer },
+});
 
-export const store = createStore(counterReducer);
+export const counterActions = counterSlice.actions;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

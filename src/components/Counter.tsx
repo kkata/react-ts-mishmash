@@ -1,21 +1,24 @@
-import { useSelector, useDispatch } from "react-redux";
-import { CounterState, CounterVisibleState } from "../store/index";
+import { TypedUseSelectorHook, useSelector, useDispatch } from "react-redux";
+import { counterActions, AppDispatch, RootState } from "../store/index";
+
+const useAppDispatch = () => useDispatch<AppDispatch>();
+const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 const Counter = () => {
-  const dispatch = useDispatch();
-  const counter = useSelector((state: CounterState) => state.value);
-  const show = useSelector((state: CounterVisibleState) => state.isVisible);
+  const dispatch = useAppDispatch();
+  const counter = useAppSelector((state) => state.counter.value);
+  const show = useAppSelector((state) => state.counter.isVisible);
   const handleIncrement = () => {
-    dispatch({ type: "increment" });
+    dispatch(counterActions.increment());
   };
   const handleDecrement = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterActions.decrement());
   };
   const handleIncrease = () => {
-    dispatch({ type: "increase", amount: 5 });
+    dispatch(counterActions.increase(5));
   };
   const handleToggle = () => {
-    dispatch({ type: "toggle" });
+    dispatch(counterActions.toggleCounter());
   };
   return (
     <div>
