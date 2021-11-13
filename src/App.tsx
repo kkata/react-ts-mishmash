@@ -3,6 +3,8 @@ import { useState } from "react";
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
 import Counter from "./components/Counter";
+import Header from "./components/Header";
+import Auth from "./components/Auth";
 
 import "./App.css";
 
@@ -65,6 +67,8 @@ const App = () => {
 
   return (
     <div>
+      <Header />
+      <Auth />
       Hello Todos🍬
       <Form handleAddTodo={handleAddTodo} handleStatus={handleStatus} />
       <TodoList
