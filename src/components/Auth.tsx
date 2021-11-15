@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import { authActions, AppDispatch } from "../store/index";
+import { AppDispatch } from "../store/index";
+import { authActions } from "../store/authSlice";
 
 const useAppDispatch = () => useDispatch<AppDispatch>();
 
