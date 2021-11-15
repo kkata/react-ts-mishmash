@@ -1,5 +1,16 @@
+import { useDispatch } from "react-redux";
+import { authActions, AppDispatch } from "../store/index";
+
+const useAppDispatch = () => useDispatch<AppDispatch>();
+
 const Auth = () => {
-  const loginHandler = () => {};
+  const dispatch = useAppDispatch();
+
+  const loginHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    dispatch(authActions.login());
+  };
   return (
     <form onSubmit={loginHandler}>
       <div>

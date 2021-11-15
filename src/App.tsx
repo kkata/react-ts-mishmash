@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { RootState } from "./store/index";
 
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
 import Counter from "./components/Counter";
 import Header from "./components/Header";
 import Auth from "./components/Auth";
+import UserProfile from "./components/UserProfile";
 
 import "./App.css";
 
@@ -18,6 +21,8 @@ export type TodoType = {
 
 export const todoStatus = ["all", "completed", "uncompleted"] as const;
 export type TodoStatusType = typeof todoStatus[number];
+
+const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 const App = () => {
   const [todos, setTodos] = useState<TodoType[]>([]);
@@ -65,10 +70,13 @@ const App = () => {
     setStatus(status);
   };
 
+  const isAuth = useAppSelector((state) => state.auth.isAuthenticated);
+
   return (
     <div>
       <Header />
-      <Auth />
+      {!isAuth && <Auth />}
+      {isAuth && <UserProfile />}
       Hello Todos🍬
       <Form handleAddTodo={handleAddTodo} handleStatus={handleStatus} />
       <TodoList
