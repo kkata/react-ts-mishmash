@@ -1,62 +1,76 @@
 import { useState } from "react";
-import { TodoType } from "../App";
 
-type Props = {
-  handleDeleteTodo: (todoId: number) => void;
-  handleCompleteTodo: (todoId: number) => void;
-  handleEditTodo: (todoId: number, todoText: string) => void;
-} & { todo: TodoType };
+import TodoForm from "./TodoForm";
+import TodoList from "./TodoList";
 
-const Todo = ({
-  todo,
-  handleDeleteTodo,
-  handleCompleteTodo,
-  handleEditTodo,
-}: Props) => {
-  const [isEditing, setIsEditing] = useState(false);
+export type TodoType = {
+  id: number;
+  text: string;
+  completed: boolean;
+  created: Date;
+  updated?: Date;
+};
 
-  const deleteHandler = () => {
-    handleDeleteTodo(todo.id);
-  };
-  const completeHandler = () => {
-    handleCompleteTodo(todo.id);
-  };
+export const todoStatus = ["all", "completed", "uncompleted"] as const;
+export type TodoStatusType = typeof todoStatus[number];
 
-  const editHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    handleEditTodo(todo.id, event.currentTarget.value);
+const Todo = () => {
+  const [todos, setTodos] = useState<TodoType[]>([]);
+  const [status, setStatus] = useState<string>("all");
+
+  const handleAddTodo = (newTodo: TodoType) => {
+    setTodos((prevTodos): TodoType[] => {
+      return [newTodo, ...prevTodos];
+    });
   };
 
-  const editingHandler = () => {
-    setIsEditing(!isEditing);
+  const handleDeleteTodo = (todoId: number) => {
+    setTodos((prevTodos) => {
+      return prevTodos.filter((item) => {
+        return item.id !== todoId;
+      });
+    });
   };
 
+  const handleCompleteTodo = (todoId: number) => {
+    setTodos((prevTodos) => {
+      return prevTodos.map((item) => {
+        return item.id === todoId
+          ? {
+              ...item,
+              completed: !item.completed,
+              updated: new Date(),
+            }
+          : item;
+      });
+    });
+  };
+
+  const handleEditTodo = (todoId: number, todoText: string) => {
+    setTodos((prevTodos) => {
+      return prevTodos.map((item) => {
+        return item.id === todoId
+          ? { ...item, text: todoText, updated: new Date() }
+          : item;
+      });
+    });
+  };
+
+  const handleStatus = (status: TodoStatusType) => {
+    setStatus(status);
+  };
   return (
-    <li>
-      {isEditing ? (
-        <input
-          type="text"
-          value={todo.text}
-          onChange={editHandler}
-          onBlur={editingHandler}
-          autoFocus
-        />
-      ) : (
-        <p onClick={editingHandler}>
-          {todo.completed ? <del>{todo.text}</del> : todo.text}
-        </p>
-      )}
-      {!isEditing && (
-        <button onClick={completeHandler}>
-          <i className="fas fa-check"></i>
-        </button>
-      )}
-
-      <button onClick={deleteHandler}>
-        <i className="fas fa-trash"></i>
-      </button>
-      <p>created: {todo.created.toISOString()}</p>
-      {todo.updated && <p>updated: {todo.updated.toISOString()}</p>}
-    </li>
+    <>
+      <h1>Hello Todos🍬</h1>
+      <TodoForm handleAddTodo={handleAddTodo} handleStatus={handleStatus} />
+      <TodoList
+        todos={todos}
+        status={status}
+        handleDeleteTodo={handleDeleteTodo}
+        handleCompleteTodo={handleCompleteTodo}
+        handleEditTodo={handleEditTodo}
+      />
+    </>
   );
 };
 

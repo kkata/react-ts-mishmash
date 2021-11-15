@@ -1,6 +1,6 @@
-import Todo from "./Todo";
+import TodoItem from "./TodoItem";
 
-import { TodoType } from "../App";
+import { TodoType } from "./Todo";
 
 type Props = {
   todos: TodoType[];
@@ -32,7 +32,7 @@ const TodoList = ({
     <div>
       <ul>
         {filteredTodo.map((todo) => (
-          <Todo
+          <TodoItem
             todo={todo}
             key={todo.id}
             handleDeleteTodo={handleDeleteTodo}

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import { TodoType, todoStatus, TodoStatusType } from "../App";
+import { TodoType, todoStatus, TodoStatusType } from "./Todo";
 
 type Props = {
   handleAddTodo: (newTodo: TodoType) => void;
