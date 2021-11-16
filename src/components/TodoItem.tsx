@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TodoType } from "./Todo";
+import { TodoType } from "../store/todoSlice";
 
 type Props = {
   handleDeleteTodo: (todoId: number) => void;
@@ -54,8 +54,8 @@ const Todo = ({
       <button onClick={deleteHandler}>
         <i className="fas fa-trash"></i>
       </button>
-      <p>created: {todo.created.toISOString()}</p>
-      {todo.updated && <p>updated: {todo.updated.toISOString()}</p>}
+      <p>created: {todo.created}</p>
+      {todo.updated && <p>updated: {todo.updated}</p>}
     </li>
   );
 };

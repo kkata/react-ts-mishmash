@@ -1,64 +1,40 @@
-import { useState } from "react";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import { AppDispatch, RootState } from "../store/index";
+import { todoActions } from "../store/todoSlice";
 
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 
-export type TodoType = {
-  id: number;
-  text: string;
-  completed: boolean;
-  created: Date;
-  updated?: Date;
-};
+import { TodoType, TodoStatusType } from "../store/todoSlice";
 
-export const todoStatus = ["all", "completed", "uncompleted"] as const;
-export type TodoStatusType = typeof todoStatus[number];
+const useAppDispatch = () => useDispatch<AppDispatch>();
+const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 const Todo = () => {
-  const [todos, setTodos] = useState<TodoType[]>([]);
-  const [status, setStatus] = useState<string>("all");
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state) => state.todo.todos);
+  const status = useAppSelector((state) => state.todo.status);
 
   const handleAddTodo = (newTodo: TodoType) => {
-    setTodos((prevTodos): TodoType[] => {
-      return [newTodo, ...prevTodos];
-    });
+    dispatch(todoActions.add(newTodo));
   };
 
   const handleDeleteTodo = (todoId: number) => {
-    setTodos((prevTodos) => {
-      return prevTodos.filter((item) => {
-        return item.id !== todoId;
-      });
-    });
+    dispatch(todoActions.delete(todoId));
   };
 
   const handleCompleteTodo = (todoId: number) => {
-    setTodos((prevTodos) => {
-      return prevTodos.map((item) => {
-        return item.id === todoId
-          ? {
-              ...item,
-              completed: !item.completed,
-              updated: new Date(),
-            }
-          : item;
-      });
-    });
+    dispatch(todoActions.complete(todoId));
   };
 
   const handleEditTodo = (todoId: number, todoText: string) => {
-    setTodos((prevTodos) => {
-      return prevTodos.map((item) => {
-        return item.id === todoId
-          ? { ...item, text: todoText, updated: new Date() }
-          : item;
-      });
-    });
+    dispatch(todoActions.edit({ id: todoId, text: todoText }));
   };
 
   const handleStatus = (status: TodoStatusType) => {
-    setStatus(status);
+    dispatch(todoActions.filtered(status));
   };
+
   return (
     <>
       <h1>Hello Todos🍬</h1>

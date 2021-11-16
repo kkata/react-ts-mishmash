@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 
-import { TodoType } from "./Todo";
+import { TodoType } from "../store/todoSlice";
 
 type Props = {
   todos: TodoType[];

@@ -1,6 +1,8 @@
 import { useRef } from "react";
 
-import { TodoType, todoStatus, TodoStatusType } from "./Todo";
+import { todoStatus, TodoStatusType } from "../store/todoSlice";
+
+import { TodoType } from "../store/todoSlice";
 
 type Props = {
   handleAddTodo: (newTodo: TodoType) => void;
@@ -15,7 +17,7 @@ const Form = ({ handleAddTodo, handleStatus }: Props) => {
       id: Math.random() * 1000,
       text: inputRef.current!.value,
       completed: false,
-      created: new Date(),
+      created: new Date().toISOString(),
     };
     handleAddTodo(newTodo);
 
